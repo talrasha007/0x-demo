@@ -7,6 +7,7 @@
 
 <script>
 import { Web3Wrapper } from '@0x/web3-wrapper';
+import { ContractWrappers } from '0x.js';
 import { getContractAddressesForNetworkOrThrow } from '@0x/contract-addresses';
 
 export default {
@@ -18,7 +19,9 @@ export default {
 
     const web3Wrapper = new Web3Wrapper(window.ethereum);
     const networkId = await web3Wrapper.getNetworkIdAsync();
-    this.$data.addresses = getContractAddressesForNetworkOrThrow(networkId);
+    const contractAddresses = this.$data.addresses = getContractAddressesForNetworkOrThrow(networkId);
+
+    const contractWrappers = new ContractWrappers(web3Wrapper.getProvider(), { networkId, contractAddresses });
   },
 
   data() {
